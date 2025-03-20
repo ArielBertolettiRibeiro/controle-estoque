@@ -1,9 +1,13 @@
 package com.controle.estoque.model.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @Entity
 @Table(name = "vendas")
@@ -26,8 +30,11 @@ public class Venda {
     public Venda() {
     }
 
-    public Venda(Integer quantidadeVendida) {
+    public Venda(Integer quantidadeVendida, Produto produto) {
         this.quantidadeVendida = quantidadeVendida;
         this.dataVenda = LocalDateTime.now();
+        this.produto = produto;
     }
+
+
 }
