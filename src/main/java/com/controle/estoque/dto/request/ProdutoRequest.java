@@ -1,13 +1,11 @@
-package com.controle.estoque.model.request;
+package com.controle.estoque.dto.request;
 
-import com.controle.estoque.model.domain.entities.Categoria;
+import com.controle.estoque.domain.entities.Categoria;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
@@ -27,5 +25,5 @@ public class ProdutoRequest {
 
     @NotNull(message = "A quantidade disponível é obrigatória.")
     @Min(value = 0, message = "A qauntidade disponível não pode ser negativa.")
-    private Integer quantiadeDisponivel;
+    private Integer quantidadeDisponivel;
 }

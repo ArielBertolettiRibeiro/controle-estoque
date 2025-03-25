@@ -1,14 +1,11 @@
-package com.controle.estoque.model.domain.entities;
+package com.controle.estoque.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "produtos")
 public class Produto {

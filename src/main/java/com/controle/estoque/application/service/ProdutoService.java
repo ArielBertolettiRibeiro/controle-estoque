@@ -1,19 +1,20 @@
-package com.controle.estoque.aplication.service;
+package com.controle.estoque.application.service;
 
 import com.controle.estoque.config.mapper.ProdutoMapper;
 import com.controle.estoque.infrastructure.repository.MovimentacaoEstoqueRepository;
 import com.controle.estoque.infrastructure.repository.ProdutoRepository;
 import com.controle.estoque.infrastructure.repository.VendaRepository;
-import com.controle.estoque.model.domain.entities.MovimentacaoEstoque;
-import com.controle.estoque.model.domain.entities.Produto;
-import com.controle.estoque.model.domain.entities.TipoMovimentacao;
-import com.controle.estoque.model.domain.entities.Venda;
-import com.controle.estoque.model.request.ProdutoRequest;
-import com.controle.estoque.model.response.ProdutoResponse;
+import com.controle.estoque.domain.entities.MovimentacaoEstoque;
+import com.controle.estoque.domain.entities.Produto;
+import com.controle.estoque.domain.entities.TipoMovimentacao;
+import com.controle.estoque.domain.entities.Venda;
+import com.controle.estoque.dto.request.ProdutoRequest;
+import com.controle.estoque.dto.response.ProdutoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -47,7 +48,7 @@ public class ProdutoService {
     }
 
     public ProdutoResponse buscarPeloNome(String nome) {
-        Produto produto = repository.findByNome(nome);
+        Produto produto = repository.findByNomeContainingIgnoreCase(nome);
         return mapper.toResponse(produto);
     }
 
@@ -59,25 +60,29 @@ public class ProdutoService {
         produto.setNome(produtoRequest.getNome());
         produto.setCategoria(produtoRequest.getCategoria());
         produto.setPreco(produtoRequest.getPreco());
-        produto.setQuantidadeDisponivel(produtoRequest.getQuantiadeDisponivel());
+        produto.setQuantidadeDisponivel(produtoRequest.getQuantidadeDisponivel());
 
         Produto atualizado = repository.save(produto);
         return mapper.toResponse(atualizado);
     }
 
-    public ProdutoResponse reporEstoque(String nome, int quantidade) {
-        Produto produto = repository.findByNome(nome);
-        if (quantidade <= 0) {
+    public ProdutoResponse reporEstoque(Long id, int quantidade) {
+        Optional<Produto> produto = repository.findById(id);
+        if (produto.isEmpty()) {
+            throw new IllegalArgumentException("produto não encontrado!");
+        }
+        if (quantidade <= 0 ) {
             throw new IllegalArgumentException("Quantidade adicional deve ser maior que zero!");
         }
 
-        produto.setQuantidadeDisponivel(produto.getQuantidadeDisponivel() + quantidade);
-        repository.save(produto);
+        Produto prod = produto.get();
+        prod.setQuantidadeDisponivel(prod.getQuantidadeDisponivel() + quantidade);
+        repository.save(prod);
 
-        MovimentacaoEstoque movimentacao = new MovimentacaoEstoque(produto, quantidade, TipoMovimentacao.ENTRADA);
+        MovimentacaoEstoque movimentacao = new MovimentacaoEstoque(prod, quantidade, TipoMovimentacao.ENTRADA);
         movimentacaoEstoqueRepository.save(movimentacao);
 
-        return mapper.toResponse(produto);
+        return mapper.toResponse(prod);
     }
 
     public ProdutoResponse venderProduto(Long id, int quantidadeVendida) {

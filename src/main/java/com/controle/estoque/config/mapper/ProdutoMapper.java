@@ -1,8 +1,8 @@
 package com.controle.estoque.config.mapper;
 
-import com.controle.estoque.model.domain.entities.Produto;
-import com.controle.estoque.model.request.ProdutoRequest;
-import com.controle.estoque.model.response.ProdutoResponse;
+import com.controle.estoque.domain.entities.Produto;
+import com.controle.estoque.dto.request.ProdutoRequest;
+import com.controle.estoque.dto.response.ProdutoResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

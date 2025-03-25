@@ -1,4 +1,4 @@
-package com.controle.estoque.model.domain.entities;
+package com.controle.estoque.domain.entities;
 
 public enum TipoMovimentacao {
 

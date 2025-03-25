@@ -1,6 +1,6 @@
-package com.controle.estoque.model.response;
+package com.controle.estoque.dto.response;
 
-import com.controle.estoque.model.domain.entities.Categoria;
+import com.controle.estoque.domain.entities.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +16,5 @@ public class ProdutoResponse {
     private String nome;
     private Categoria categoria;
     private BigDecimal preco;
-    private Integer quantidadeDeisponivel;
+    private Integer quantidadeDisponivel;
 }

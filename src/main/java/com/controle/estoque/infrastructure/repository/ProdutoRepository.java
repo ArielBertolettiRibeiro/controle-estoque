@@ -1,6 +1,6 @@
 package com.controle.estoque.infrastructure.repository;
 
-import com.controle.estoque.model.domain.entities.Produto;
+import com.controle.estoque.domain.entities.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByQuantidadeDisponivelGreaterThan(Integer quantidade);
 
     // Busca um produto exato pelo nome
-    Produto findByNome(String nome);
+    Produto findByNomeContainingIgnoreCase(String nome);
 }
