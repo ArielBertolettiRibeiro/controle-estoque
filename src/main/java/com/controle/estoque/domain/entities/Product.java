@@ -8,38 +8,38 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "produtos")
-public class Produto {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nome", nullable = false)
-    private String nome;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria", nullable = false)
-    private Categoria categoria;
+    private Category category;
 
     @Column(name = "valor_unidade", nullable = false)
-    private BigDecimal preco;
+    private BigDecimal unitPrice;
 
     @Column(name = "quantidade_disponivel", nullable = false)
-    private Integer quantidadeDisponivel;
+    private Integer availableQuantity;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<Venda> vendas;
+    private List<Sale> sales;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<MovimentacaoEstoque> movimentacoes;
+    private List<StockMovement> stockMovements;
 
-    public Produto() {
+    public Product() {
     }
 
-    public Produto(String nome, Categoria categoria, BigDecimal preco, Integer quantidadeDisponivel) {
-        this.nome = nome;
-        this.categoria = categoria;
-        this.preco = preco;
-        this.quantidadeDisponivel = quantidadeDisponivel;
+    public Product(String name, Category category, BigDecimal unitPrice, Integer availableQuantity) {
+        this.name = name;
+        this.category = category;
+        this.unitPrice = unitPrice;
+        this.availableQuantity = availableQuantity;
     }
 }
